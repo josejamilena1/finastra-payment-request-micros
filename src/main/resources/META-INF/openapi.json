@@ -1,0 +1,1011 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Payment Request (PSD2, STET)",
+        "version": "1.3.0",
+        "description": "Merchant Initiates a payment request to customer account, so that the customer can give their consent to complete the transaction at merchant web site.",
+        "contact": {
+            "name": "API Support",
+            "url": "https://community.fusionfabric.cloud/index.html"
+        },
+        "x-finastra-category": "Consumer Banking",
+        "x-finastra-subcategory": "Payments",
+        "x-finastra-short-description": "Merchant Initiates a payment request to customer account, so that the customer can give their consent to complete the transaction at merchant web site.",
+        "x-finastra-tags": [
+            "Fusion Digital Channels",
+            "Payment",
+            "Excluding North America"
+        ],
+        "x-finastra-channel-type": "B2B",
+        "x-finastra-maturity-level": "GA",
+        "x-finastra-audience": "PUBLIC",
+        "x-finastra-implementability": "INTERNAL",
+        "x-finastra-icon": "Icons_9m.svg",
+        "x-finastra-data-classification": [
+            "Restricted"
+        ],
+        "x-finastra-commitId": "07970c287ef26f9cfec813e47ae123470151c343"
+    },
+    "host": "api.fusionfabric.cloud",
+    "basePath": "/retail/psd2/stet/pisp/v1.3",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/payment-requests": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json;charset=utf-8",
+                    "application/hal+json;charset=utf-8"
+                ],
+                "tags": [
+                    "PISP"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "description": "Access token to be passed as a header",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "x-finastra-data-classification": [
+                            "Restricted"
+                        ]
+                    },
+                    {
+                        "name": "paymentRequest",
+                        "description": "ISO20022 based payment Initiation Request",
+                        "schema": {
+                            "$ref": "#/definitions/PaymentRequestResource"
+                        },
+                        "in": "body",
+                        "required": true
+                    },
+                    {
+                        "name": "Signature",
+                        "description": "http-signature of the request (cf. https://datatracker.ietf.org/doc/draft-cavage-http-signatures/) The keyId part of the header should be formatted as follows   keiId=\"SN=XXX,CA=YYYYYYYYYYYYYYYY\" where   \"XXX\" is the serial number, in hexadecimal without any prefix (like 0x), of the QSEAL certificate whose relevant private key was used for signing   \"YYYYYYYYYYYYYYYY\" is the the Issuer DN, full Distinguished Name of the Certification Authority having issued this certificate  HTTP400 will be returned by the server in case of invalid or absent signature",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "x-finastra-data-classification": [
+                            "Restricted"
+                        ]
+                    },
+                    {
+                        "name": "X-Request-ID",
+                        "description": "Correlation header to be set in a request and retrieved in the relevant response",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-IP-Address",
+                        "description": "IP address used by the PSU's terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string",
+                        "x-finastra-data-classification": [
+                            "Restricted"
+                        ]
+                    },
+                    {
+                        "name": "PSU-IP-Port",
+                        "description": "IP port used by the PSU's terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-HTTP-Method",
+                        "description": "Http method for the most relevant PSU's terminal request to the TTP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Date",
+                        "description": "Timestamp of the most relevant PSU's terminal request to the TTP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-GEO-Location",
+                        "description": "Geographical location of the PSU as provided by the PSU mobile terminal if any to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-User-Agent",
+                        "description": "\"User-Agent\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Referer",
+                        "description": "\"Referer\" header field sent by the PSU terminal when connecting to the TPP. Notice that an initial typo in RFC 1945 specifies that \"referer\" (incorrect spelling) is to be used. The correct spelling \"referrer\" can be used but might not be understood.",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept",
+                        "description": "\"Accept\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept-Charset",
+                        "description": "\"Accept-Charset\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept-Encoding",
+                        "description": "\"Accept-Encoding\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept-Language",
+                        "description": "\"Accept-Language\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Digest",
+                        "description": "Digest of the body",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/HalPaymentTransferRequestCreation"
+                        }
+                    },
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/HalPaymentTransferRequestCreation"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized, authentication failure.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden, authentication successful but access to resource is not allowed.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "408": {
+                        "description": "Request Timeout.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                },
+                "operationId": "paymentRequestsPost_1",
+                "summary": "Initiate payment request from the customer bank account on behalf of a merchant",
+                "description": "The third-party provider (PISP) send a payment request to the customer's bank in a standard structure (ISO:20022 pain.013.014) to complete the commercial transaction.",
+                "x-finastra-data-classification": [
+                    "Restricted"
+                ]
+            }
+        },
+        "/payment-requests/{paymentRequestResourceId}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json;charset=utf-8",
+                    "application/hal+json;charset=utf-8"
+                ],
+                "tags": [
+                    "PISP"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "description": "Access token to be passed as a header",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "x-finastra-data-classification": [
+                            "Restricted"
+                        ]
+                    },
+                    {
+                        "name": "paymentRequestResourceId",
+                        "description": "Identification of the Payment Request Resource",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Signature",
+                        "description": "http-signature of the request (cf. https://datatracker.ietf.org/doc/draft-cavage-http-signatures/) The keyId part of the header should be formatted as follows   keiId=\"SN=XXX,CA=YYYYYYYYYYYYYYYY\" where   \"XXX\" is the serial number, in hexadecimal without any prefix (like 0x), of the QSEAL certificate whose relevant private key was used for signing   \"YYYYYYYYYYYYYYYY\" is the the Issuer DN, full Distinguished Name of the Certification Authority having issued this certificate  HTTP400 will be returned by the server in case of invalid or absent signature",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "x-finastra-data-classification": [
+                            "Restricted"
+                        ]
+                    },
+                    {
+                        "name": "X-Request-ID",
+                        "description": "Correlation header to be set in a request and retrieved in the relevant response",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-IP-Address",
+                        "description": "IP address used by the PSU's terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string",
+                        "x-finastra-data-classification": [
+                            "Restricted"
+                        ]
+                    },
+                    {
+                        "name": "PSU-IP-Port",
+                        "description": "IP port used by the PSU's terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-HTTP-Method",
+                        "description": "Http method for the most relevant PSU's terminal request to the TTP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Date",
+                        "description": "Timestamp of the most relevant PSU's terminal request to the TTP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-GEO-Location",
+                        "description": "Geographical location of the PSU as provided by the PSU mobile terminal if any to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-User-Agent",
+                        "description": "\"User-Agent\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Referer",
+                        "description": "\"Referer\" header field sent by the PSU terminal when connecting to the TPP. Notice that an initial typo in RFC 1945 specifies that \"referer\" (incorrect spelling) is to be used. The correct spelling \"referrer\" can be used but might not be understood.",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept",
+                        "description": "\"Accept\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept-Charset",
+                        "description": "\"Accept-Charset\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept-Encoding",
+                        "description": "\"Accept-Encoding\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "PSU-Accept-Language",
+                        "description": "\"Accept-Language\" header field sent by the PSU terminal when connecting to the TPP",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Digest",
+                        "description": "Digest of the body",
+                        "in": "header",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieval of the previously posted Payment Request",
+                        "schema": {
+                            "$ref": "#/definitions/HalPaymentRequest"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized, authentication failure.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden, authentication successful but access to resource is not allowed.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found, no request available.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "408": {
+                        "description": "Request Timeout.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorModel"
+                        }
+                    }
+                },
+                "operationId": "paymentRequestsGet",
+                "summary": "Retrieve payment request status and details",
+                "description": "A third-party provider (PISP) request payment status from the bank (ASPSP - Account Servicing Payment Service Provider)",
+                "x-finastra-data-classification": [
+                    "Restricted"
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "AccountIdentification": {
+            "title": "AccountIdentification",
+            "description": "Unique and unambiguous identification for the account between the account owner and the account servicer.",
+            "type": "object",
+            "properties": {
+                "iban": {
+                    "description": "ISO20022: International Bank Account Number (IBAN) - identification used internationally by financial institutions to uniquely identify the account of a customer.   Further specifications of the format and content of the IBAN can be found in the standard ISO 13616 \"Banking and related financial services - International Bank Account Number (IBAN)\" version 1997-10-01, or later revisions. ",
+                    "type": "string",
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                },
+                "other": {
+                    "$ref": "#/definitions/GenericIdentification"
+                }
+            }
+        },
+        "AmountType": {
+            "title": "AmountType",
+            "description": "ISO20022: structure aiming to carry either an instructed amount or equivalent amount. Both structures embed the amount and the currency to be used.  API: only instructed amount can be used ",
+            "required": [
+                "amount",
+                "currency"
+            ],
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "ISO20022: Amount of money to be moved between the debtor and creditor, before deduction of charges, expressed in the currency as ordered by the initiating party. ",
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "ISO20022: Specifies the currency of the to be transferred amount, which is different from the currency of the debtor's account. A code allocated to a currency by a Maintenance Agency under an international identification scheme, as described in the latest edition of the international standard ISO 4217 \"Codes for the representation of currencies and funds\".  ",
+                    "type": "string"
+                }
+            }
+        },
+        "CreditTransferTransaction": {
+            "title": "CreditTransferTransaction",
+            "description": "ISO20022: Payment processes required to transfer cash from the debtor to the creditor.",
+            "required": [
+                "instructedAmount",
+                "paymentId",
+                "remittanceInformation",
+                "requestedExecutionDate"
+            ],
+            "type": "object",
+            "properties": {
+                "instructedAmount": {
+                    "$ref": "#/definitions/AmountType"
+                },
+                "paymentId": {
+                    "$ref": "#/definitions/PaymentIdentification"
+                },
+                "regulatoryReportingCode": {
+                    "description": "Information needed due to regulatory and statutory requirements.  Economical codes to be used are provided by the National Competent Authority ",
+                    "type": "string"
+                },
+                "remittanceInformation": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                },
+                "requestedExecutionDate": {
+                    "format": "date-time",
+                    "description": "ISO20022: Date at which the initiating party requests the clearing agent to process the payment.  ",
+                    "type": "string"
+                },
+                "statusReasonInformation": {
+                    "enum": [
+                        "AC01",
+                        "AC04",
+                        "AC06",
+                        "AG01",
+                        "CUST",
+                        "FF01",
+                        "FRAD",
+                        "MS03",
+                        "NOAS",
+                        "RR01",
+                        "RR03",
+                        "RR04",
+                        "RR12"
+                    ],
+                    "type": "string"
+                },
+                "transactionStatus": {
+                    "enum": [
+                        "RJCT",
+                        "PDNG",
+                        "ACSP",
+                        "ACSC"
+                    ],
+                    "type": "string"
+                }
+            }
+        },
+        "ErrorModel": {
+            "title": "ErrorModel",
+            "description": "Generic error report structure",
+            "required": [
+                "message",
+                "status"
+            ],
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "HTTP error text",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "HTTP textual reason phrase",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "Relevant path that was used",
+                    "type": "string"
+                },
+                "status": {
+                    "format": "int32",
+                    "description": "HTTP error code",
+                    "type": "integer"
+                },
+                "timestamp": {
+                    "format": "date-time",
+                    "description": "current timestamp",
+                    "type": "string"
+                }
+            }
+        },
+        "FinancialInstitutionIdentification": {
+            "title": "FinancialInstitutionIdentification",
+            "description": "ISO20022: Unique and unambiguous identification of a financial institution, as assigned under an internationally recognised or proprietary identification scheme.  API: Only <Bicfi> element is allowed ",
+            "required": [
+                "bicFi"
+            ],
+            "type": "object",
+            "properties": {
+                "bicFi": {
+                    "description": "ISO20022: Code allocated to a financial institution by the ISO 9362 Registration Authority as described in ISO 9362 \"Banking - Banking telecommunication messages - Business identification code (BIC)\". ",
+                    "type": "string"
+                }
+            }
+        },
+        "GenericIdentification": {
+            "title": "GenericIdentification",
+            "description": "ISO20022: Unique identification of an account, a person or an organisation, as assigned by an issuer.",
+            "required": [
+                "identification",
+                "issuer",
+                "schemeName"
+            ],
+            "type": "object",
+            "properties": {
+                "identification": {
+                    "description": "API: alias of an account ",
+                    "type": "string",
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                },
+                "issuer": {
+                    "description": "ISO20022: Entity that assigns the identification. this could a country code or any organisation name or identifier that can be recognized by both parties ",
+                    "type": "string"
+                },
+                "schemeName": {
+                    "description": "Name of the identification scheme. Possible values for the scheme name, partially based on ISO20022 external code list, are the following: - BANK (BankPartyIdentification): Unique and unambiguous assignment made by a specific bank or similar financial institution to identify a relationship as defined between the bank and its client.  - COID (CountryIdentificationCode) : Country authority given organisation identification (e.g., corporate registration number) - SREN (SIREN): The SIREN number is a 9 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation in France. - SRET (SIRET): The SIRET number is a 14 digit code assigned by INSEE, the French National Institute for Statistics and Economic Studies, to identify an organisation unit in France. It consists of the SIREN number, followed by a five digit classification number, to identify the local geographical unit of that entity. - NIDN (NationalIdentityNumber): Number assigned by an authority to identify the national identity number of a person. Other values are also permitted, for instance: - OAUT (OAUTH2): OAUTH2 access token that is owned by the PISP being also an AISP and that can be used in order to identify the PSU - CPAN (CardPan): Card PAN ",
+                    "type": "string"
+                }
+            }
+        },
+        "GenericLink": {
+            "title": "GenericLink",
+            "description": "hypertext reference",
+            "required": [
+                "href"
+            ],
+            "type": "object",
+            "properties": {
+                "href": {
+                    "description": "URI to be used",
+                    "type": "string"
+                },
+                "templated": {
+                    "description": "specifies \"true\" if href is a URI template, i.e. with parameters. Otherwise, this property is absent or set to false",
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "HalPaymentRequest": {
+            "title": "HalPaymentRequest",
+            "description": "HYPERMEDIA structure used for returning the original Payment Request to the PISP",
+            "required": [
+                "_links",
+                "paymentRequest"
+            ],
+            "type": "object",
+            "properties": {
+                "_links": {
+                    "$ref": "#/definitions/PaymentTransferRequestLinks"
+                },
+                "paymentRequest": {
+                    "$ref": "#/definitions/PaymentRequestResource"
+                }
+            }
+        },
+        "HalPaymentTransferRequestCreation": {
+            "title": "HalPaymentTransferRequestCreation",
+            "description": "data forwarded by the ASPSP top the PISP after creation of the Payment or Transfer Request resource creation ",
+            "type": "object",
+            "properties": {
+                "_links": {
+                    "$ref": "#/definitions/PaymentTransferRequestResourceCreationLinks"
+                },
+                "appliedScaApproach": {
+                    "enum": [
+                        "REDIRECT",
+                        "DECOUPLED",
+                        "EMBEDDED"
+                    ],
+                    "type": "string"
+                }
+            }
+        },
+        "PartyIdentification": {
+            "title": "PartyIdentification",
+            "description": "API : Description of a Party which can be either a person or an organization.",
+            "required": [
+                "name"
+            ],
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "ISO20022: Name by which a party is known and which is usually used to identify that party. ",
+                    "type": "string",
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                },
+                "organisationId": {
+                    "$ref": "#/definitions/GenericIdentification",
+                    "description": "Unique and unambiguous way to identify an organisation."
+                },
+                "postalAddress": {
+                    "$ref": "#/definitions/PostalAddress"
+                },
+                "privateId": {
+                    "$ref": "#/definitions/GenericIdentification",
+                    "description": "Unique and unambiguous identification of a person."
+                }
+            }
+        },
+        "PaymentIdentification": {
+            "title": "PaymentIdentification",
+            "description": "ISO20022: Set of elements used to reference a payment instruction.",
+            "required": [
+                "endToEndId",
+                "instructionId"
+            ],
+            "type": "object",
+            "properties": {
+                "ResourceId": {
+                    "description": "API: Identifier assigned by the ASPSP for further use of the created resource through API calls ",
+                    "type": "string"
+                },
+                "endToEndId": {
+                    "description": "ISO20022: Unique identification assigned by the initiating party to unambiguously identify the transaction. This identification is passed on, unchanged, throughout the entire end-to-end chain.  API: Unique identification shared between the merchant and the PSU ",
+                    "type": "string"
+                },
+                "instructionId": {
+                    "description": "ISO20022: Unique identification as assigned by an instructing party for an instructed party to unambiguously identify the instruction.  API: Unique identification shared between the PISP and the ASPSP  ",
+                    "type": "string"
+                }
+            }
+        },
+        "PaymentRequestResource": {
+            "title": "PaymentRequestResource",
+            "description": "ISO20022: The PaymentRequestResource message is sent by the Creditor sending party to the Debtor receiving party, directly or through agents. It is used by a Creditor to request movement of funds from the debtor account to a creditor.",
+            "required": [
+                "creationDateTime",
+                "creditTransferTransaction",
+                "creditor",
+                "creditorAccount",
+                "initiatingParty",
+                "numberOfTransactions",
+                "paymentInformationId",
+                "paymentTypeInformation",
+                "supplementaryData"
+            ],
+            "type": "object",
+            "properties": {
+                "chargeBearer": {
+                    "description": "- ISO2002: Specifies which party/parties will bear the charges associated with the processing of the payment transaction. - API: Set to \"SLEV\" or omitted",
+                    "enum": [
+                        "SLEV"
+                    ],
+                    "type": "string"
+                },
+                "creationDateTime": {
+                    "format": "date-time",
+                    "description": "ISO20022: Date and time at which a (group of) payment instruction(s) was created by the instructing party.",
+                    "type": "string"
+                },
+                "creditTransferTransaction": {
+                    "description": "ISO20022: Payment processes required to transfer cash from the debtor to the creditor.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CreditTransferTransaction"
+                    },
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                },
+                "creditor": {
+                    "$ref": "#/definitions/PartyIdentification"
+                },
+                "creditorAccount": {
+                    "$ref": "#/definitions/AccountIdentification"
+                },
+                "creditorAgent": {
+                    "$ref": "#/definitions/FinancialInstitutionIdentification"
+                },
+                "debtor": {
+                    "$ref": "#/definitions/PartyIdentification"
+                },
+                "debtorAccount": {
+                    "$ref": "#/definitions/AccountIdentification"
+                },
+                "debtorAgent": {
+                    "$ref": "#/definitions/FinancialInstitutionIdentification"
+                },
+                "initiatingParty": {
+                    "$ref": "#/definitions/PartyIdentification"
+                },
+                "numberOfTransactions": {
+                    "format": "int32",
+                    "description": "ISO20022: Number of individual transactions contained in the message. ",
+                    "type": "integer"
+                },
+                "paymentInformationId": {
+                    "description": "ISO20022 : Reference assigned by a sending party to unambiguously identify the payment information block within the message. ",
+                    "type": "string"
+                },
+                "paymentInformationStatus": {
+                    "enum": [
+                        "ACCP",
+                        "ACSC",
+                        "ACSP",
+                        "ACTC",
+                        "ACWC",
+                        "ACWP",
+                        "RCVD",
+                        "PNDG",
+                        "RJCT"
+                    ],
+                    "type": "string"
+                },
+                "paymentTypeInformation": {
+                    "$ref": "#/definitions/PaymentTypeInformation"
+                },
+                "purpose": {
+                    "enum": [
+                        "ACCT",
+                        "CASH",
+                        "COMC",
+                        "CPKC",
+                        "TRPT"
+                    ],
+                    "type": "string"
+                },
+                "resourceId": {
+                    "description": "API: Identifier assigned by the ASPSP for further use of the created resource through API calls ",
+                    "type": "string"
+                },
+                "statusReasonInformation": {
+                    "enum": [
+                        "AC01",
+                        "AC04",
+                        "AC06",
+                        "AG01",
+                        "CUST",
+                        "FF01",
+                        "FRAD",
+                        "MS03",
+                        "NOAS",
+                        "RR01",
+                        "RR03",
+                        "RR04",
+                        "RR12"
+                    ],
+                    "type": "string"
+                },
+                "supplementaryData": {
+                    "$ref": "#/definitions/SupplementaryData"
+                },
+                "ultimateCreditor": {
+                    "$ref": "#/definitions/PartyIdentification"
+                }
+            }
+        },
+        "PaymentTransferRequestLinks": {
+            "title": "PaymentTransferRequestLinks",
+            "description": "links that can be used for further navigation when having post a Payment Request in order to get the relevant status report.",
+            "type": "object",
+            "properties": {
+                "confirmation": {
+                    "$ref": "#/definitions/GenericLink",
+                    "description": "This link shall not been provided when then confirmation has already been posted."
+                },
+                "self": {
+                    "$ref": "#/definitions/GenericLink"
+                }
+            }
+        },
+        "PaymentTransferRequestResourceCreationLinks": {
+            "title": "PaymentTransferRequestResourceCreationLinks",
+            "description": "links that can be used for further navigation, especially in REDIRECT approach",
+            "type": "object",
+            "properties": {
+                "consentApproval": {
+                    "$ref": "#/definitions/GenericLink",
+                    "description": "URL to be used by the PISP in order to start the ASPSP SCA and consent management process"
+                }
+            }
+        },
+        "PaymentTypeInformation": {
+            "title": "PaymentTypeInformation",
+            "description": "ISO20022: Set of elements used to further specify the type of transaction.",
+            "required": [
+                "serviceLevel"
+            ],
+            "type": "object",
+            "properties": {
+                "categoryPurpose": {
+                    "enum": [
+                        "CASH",
+                        "DVPM"
+                    ],
+                    "type": "string"
+                },
+                "instructionPriority": {
+                    "enum": [
+                        "HIGH",
+                        "NORM"
+                    ],
+                    "type": "string"
+                },
+                "localInstrument": {
+                    "enum": [
+                        "INST"
+                    ],
+                    "type": "string"
+                },
+                "serviceLevel": {
+                    "enum": [
+                        "NURG",
+                        "SEPA"
+                    ],
+                    "type": "string"
+                }
+            }
+        },
+        "PostalAddress": {
+            "title": "PostalAddress",
+            "description": "ISO20022 : Information that locates and identifies a specific address, as defined by postal services.",
+            "required": [
+                "addressLine",
+                "country"
+            ],
+            "type": "object",
+            "properties": {
+                "addressLine": {
+                    "description": "Unstructured address. The two lines must embed zip code and town name",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                },
+                "country": {
+                    "description": "ISO20022: Country in which a person resides (the place of a person's home). In the case of a company, it is the country from which the affairs of that company are directed. ",
+                    "type": "string",
+                    "x-finastra-data-classification": [
+                        "Restricted"
+                    ]
+                }
+            }
+        },
+        "SupplementaryData": {
+            "title": "SupplementaryData",
+            "description": "ISO20022: Additional information that cannot be captured in the structured elements and/or any other specific block.  API: This structure is used to embed the relevant URLs for returning the status report to the PISP and to specify which SCA approaches are accepted by the PISP and which has been chosen by the ASPSP",
+            "type": "object",
+            "properties": {
+                "acceptedScaApproach": {
+                    "description": "can only be set by the PISP SCA approaches that are supported by the PISP. The PISP can provide several choices separated by commas.  REDIRECT: the PSU is redirected by the TPP to the ASPSP which processes identification and authentication DECOUPLED: the TPP identifies the PSU and forwards the identification to the ASPSP which processes the authentication through a decoupled device EMBEDDED: the TPP identifies the PSU and forwards the identification to the ASPSP which starts the authentication. The TPP forwards one authentication factor of the PSU (e.g. OTP or response to a challenge)",
+                    "type": "array",
+                    "items": {
+                        "enum": [
+                            "REDIRECT",
+                            "DECOUPLED",
+                            "EMBEDDED"
+                        ],
+                        "type": "string"
+                    }
+                },
+                "appliedScaApproach": {
+                    "enum": [
+                        "REDIRECT",
+                        "DECOUPLED",
+                        "EMBEDDED"
+                    ],
+                    "type": "string"
+                },
+                "successfulReportUrl": {
+                    "description": "URL to be used by the ASPSP in order to notify the PISP of the finalisation of the SCA and consent process in REDIRECT and DECOUPLED approach ",
+                    "type": "string"
+                },
+                "unsuccessfulReportUrl": {
+                    "description": "URL to be used by the ASPSP in order to notify the PISP of the failure of the SCA and consent process in REDIRECT and DECOUPLED approach  If this URL is not provided by the PISP, the ASPSP will use the \"successfulReportUrl\" even in case of failure of the Payment or Transfer Request processing ",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Oauth2": {
+            "flow": "application",
+            "tokenUrl": "https://api.fusionfabric.cloud/login/v1/sandbox/oidc/token",
+            "scopes": {
+
+            },
+            "type": "oauth2",
+            "description": "Oauth 2.0 authentication"
+        }
+    },
+    "security": [
+        {
+            "Oauth2": [
+            ]
+        }
+    ],
+    "tags": [
+        {
+            "name": "PISP",
+            "description": "A Payment Initiation Service Provider (PISP) is an authorized third-party entity (merchant) that can ask for permission to connect to a customer bank account and initiate payment on the customer's behalf, from their bank account. These APIs enable secure transfer initiation and payment status enquiry."
+        }
+    ]
+}
